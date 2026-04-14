@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link href="css/truckstyles.css" rel="stylesheet"/>
+</head>
+<body>
+    
+<div class="common header"></div>
+<div class="common headertext"><h1>TEST YOUR KNOWLEDGE</h1> </div>
+
+
+
+<div class="common leftmenu">
+    <a href="index.html">HOME</a> <br> <br>
+<a href="truck.html">WANT A TRUCK?</a>
+</div>
+
+<div class="common topmid">
+<!-- TRUCK TRIVIA — paste this into your main body div -->
+<style>
+  #truck-trivia * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  #truck-trivia {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: transparent;
+    color: #fff;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  #tt-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  #tt-header h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #1a3a6e;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0 #f5c842;
+  }
+
+  #tt-header p {
+    color: #1a3a6e;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 0.4rem;
+  }
+
+  #tt-scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #1a3a6e;
+    font-weight: bolder;
+  }
+
+  #tt-score-display {
+    background: #f5c842;
+    color: #0a1628;
+    font-weight: 900;
+    font-size: 1.5rem;
+    padding: 0.4rem 1.4rem;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  #tt-reset-btn {
+    background: transparent;
+    border: 2px solid #1a3a6e;
+    color: #1a3a6e;
+    padding: 0.4rem 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  #tt-reset-btn:hover { background: #aac4e8; color: #0a1628; }
+
+  #tt-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 960px;
+    margin: 0 auto 2rem;
+  }
+
+  .tt-cat-header {
+    background: transparent;
+    color: #1a3a6e;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.85rem 0.5rem;
+    border-radius: 6px;
+    border: 2px solid #2a5aaa;
+    line-height: 1.3;
+  }
+
+  .tt-cell {
+    background: #1a3a6e;
+    border: 2px solid #2a5aaa;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #f5c842;
+    padding: 1rem 0.5rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s, opacity 0.2s;
+    user-select: none;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tt-cell:hover:not(.tt-used) {
+    background: #254e9e;
+    transform: scale(1.03);
+  }
+
+  .tt-cell.tt-used {
+    background: #0d2040;
+    color: #0d2040;
+    border-color: #142a52;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  /* Modal */
+  #tt-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  #tt-modal-backdrop.active { display: flex; }
+
+  #tt-modal {
+    background: #0f2040;
+    border: 3px solid #f5c842;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  #tt-modal-pts {
+    font-size: 1rem;
+    color: #f5c842;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  #tt-modal-cat {
+    font-size: 0.85rem;
+    color: #aac4e8;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  #tt-modal-q {
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 2rem;
+    min-height: 3rem;
+  }
+
+  #tt-modal-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .tt-choice-btn {
+    background: #1a3a6e;
+    border: 2px solid #2a5aaa;
+    color: #e8f0fc;
+    border-radius: 8px;
+    padding: 0.75rem 0.75rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    line-height: 1.35;
+  }
+
+  .tt-choice-btn:hover:not(:disabled) {
+    background: #254e9e;
+    border-color: #5588dd;
+  }
+
+  .tt-choice-btn.correct {
+    background: #1a5e2a;
+    border-color: #3dba5e;
+    color: #b6f0c4;
+  }
+
+  .tt-choice-btn.wrong {
+    background: #5c1a1a;
+    border-color: #bb3333;
+    color: #f0b6b6;
+  }
+
+  .tt-choice-btn:disabled { cursor: default; }
+
+  #tt-modal-feedback {
+    font-size: 1rem;
+    font-weight: 700;
+    min-height: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  #tt-modal-feedback.correct { color: #3dba5e; }
+  #tt-modal-feedback.wrong   { color: #ee5555; }
+
+  #tt-modal-answer {
+    font-size: 0.9rem;
+    color: #aac4e8;
+    min-height: 1.2rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+  }
+
+  #tt-modal-continue {
+    background: #f5c842;
+    color: #0a1628;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 2.2rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: none;
+    transition: background 0.15s;
+  }
+
+  #tt-modal-continue:hover { background: #ffd84a; }
+
+  /* Win screen */
+  #tt-win-screen {
+    display: none;
+    text-align: center;
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: #0f2040;
+    border: 3px solid #f5c842;
+    border-radius: 14px;
+  }
+
+  #tt-win-screen h2 {
+    font-size: 2rem;
+    color: #f5c842;
+    margin-bottom: 0.5rem;
+  }
+
+  #tt-win-screen p {
+    color: #aac4e8;
+    margin-bottom: 1.5rem;
+  }
+
+  #tt-win-screen .tt-final-score {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  #tt-play-again {
+    background: #f5c842;
+    color: #0a1628;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 2.2rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  #tt-play-again:hover { background: #ffd84a; }
+
+  @media (max-width: 600px) {
+    #tt-header h1 { font-size: 1.9rem; }
+    #tt-board { gap: 6px; }
+    .tt-cat-header { font-size: 0.72rem; padding: 0.6rem 0.25rem; }
+    .tt-cell { font-size: 1.15rem; min-height: 56px; padding: 0.6rem 0.2rem; }
+    #tt-modal-choices { grid-template-columns: 1fr; }
+    #tt-modal-q { font-size: 1.1rem; }
+  }
+</style>
+
+<div id="truck-trivia">
+  <div id="tt-header">
+    <h1>&#128665; Truck Trivia</h1>
+    <p>Select a category and point value to begin</p>
+  </div>
+
+  <div id="tt-scoreboard">
+    <span>Score:</span>
+    <span id="tt-score-display">$0</span>
+    <button id="tt-reset-btn">&#8635; Reset</button>
+  </div>
+
+  <div id="tt-board"></div>
+  <div id="tt-win-screen">
+    <h2>&#127942; Game Complete!</h2>
+    <p>Your final score:</p>
+    <div class="tt-final-score" id="tt-final-score-val">$0</div>
+    <p id="tt-win-msg"></p>
+    <button id="tt-play-again">Play Again</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="tt-modal-backdrop">
+  <div id="tt-modal">
+    <div id="tt-modal-pts"></div>
+    <div id="tt-modal-cat"></div>
+    <div id="tt-modal-q"></div>
+    <div id="tt-modal-choices"></div>
+    <div id="tt-modal-feedback"></div>
+    <div id="tt-modal-answer"></div>
+    <button id="tt-modal-continue">Continue</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const CATEGORIES = [
+    { name: "Ford", short: "Ford" },
+    { name: "Chevrolet", short: "Chevy" },
+    { name: "Truck Parts", short: "Parts" },
+    { name: "Miscellaneous", short: "Misc" }
+  ];
+
+  const QUESTIONS = [
+    // ── FORD ──────────────────────────────────────────────────────────────
+    [
+      {
+        pts: 100,
+        q: "In what year did Ford introduce the F-Series pickup truck?",
+        choices: ["1942", "1948", "1955", "1961"],
+        answer: 1,
+        explain: "The Ford F-Series debuted in 1948 as the 'Bonus-Built' truck line."
+      },
+      {
+        pts: 200,
+        q: "What is the maximum towing capacity of the 2024 Ford F-150 (properly equipped)?",
+        choices: ["10,000 lbs", "12,500 lbs", "14,000 lbs", "13,500 lbs"],
+        answer: 3,
+        explain: "The 2024 F-150 can tow up to 13,500 lbs when properly equipped."
+      },
+      {
+        pts: 300,
+        q: "Which generation of the F-Series was the first to use an aluminum-alloy body, starting with the 2015 model year?",
+        choices: ["12th gen", "13th gen", "14th gen", "11th gen"],
+        answer: 1,
+        explain: "The 13th generation (2015 F-150) introduced the high-strength, military-grade aluminum-alloy body."
+      },
+      {
+        pts: 400,
+        q: "What is the horsepower output of the 2024 F-150's 3.5L PowerBoost Full Hybrid V6 engine?",
+        choices: ["400 hp", "430 hp", "450 hp", "380 hp"],
+        answer: 1,
+        explain: "The 3.5L PowerBoost Full Hybrid V6 produces 430 hp and 570 lb-ft of torque."
+      },
+      {
+        pts: 500,
+        q: "The Ford F-Series has been the best-selling vehicle in the United States for how many consecutive years (as of 2024)?",
+        choices: ["35 years", "42 years", "47 years", "30 years"],
+        answer: 2,
+        explain: "The F-Series has been the best-selling vehicle in the U.S. for 47 consecutive years as of 2024."
+      }
+    ],
+
+    // ── CHEVROLET ─────────────────────────────────────────────────────────
+    [
+      {
+        pts: 100,
+        q: "What name has Chevrolet used for its full-size pickup truck since 1988?",
+        choices: ["C/K Series", "Silverado", "Colorado", "Apache"],
+        answer: 1,
+        explain: "Chevy introduced the Silverado name for its full-size pickup in 1988 (and relaunched it as a standalone nameplate in 1999)."
+      },
+      {
+        pts: 200,
+        q: "What is the maximum payload capacity of the 2024 Chevrolet Silverado 1500?",
+        choices: ["1,500 lbs", "1,800 lbs", "2,250 lbs", "2,000 lbs"],
+        answer: 3,
+        explain: "The 2024 Silverado 1500 offers a maximum payload of up to 2,250 lbs."
+      },
+      {
+        pts: 300,
+        q: "Chevrolet's classic 'Task Force' series trucks were produced in which decade?",
+        choices: ["1940s", "1950s", "1960s", "1970s"],
+        answer: 1,
+        explain: "The Task Force series ran from 1955 to 1959, making it a 1950s icon."
+      },
+      {
+        pts: 400,
+        q: "The 2024 Silverado 1500 with the 2.7L Turbo High-Output engine produces how much torque?",
+        choices: ["350 lb-ft", "390 lb-ft", "420 lb-ft", "430 lb-ft"],
+        answer: 3,
+        explain: "The 2.7L Turbo High-Output four-cylinder produces 430 lb-ft of torque."
+      },
+      {
+        pts: 500,
+        q: "In what year did Chevrolet first offer an independent front suspension on its C/K pickup trucks?",
+        choices: ["1960", "1967", "1973", "1955"],
+        answer: 0,
+        explain: "Chevy's C/K trucks debuted in 1960, and the 'C' (2WD) variants featured an independent front suspension — a first for a domestic full-size pickup."
+      }
+    ],
+
+    // ── TRUCK PARTS ───────────────────────────────────────────────────────
+    [
+      {
+        pts: 100,
+        q: "What is the term for the part of a truck that connects the cab to the frame and absorbs road vibrations?",
+        choices: ["Body mount", "Cab isolator", "Jounce bumper", "Torque rod"],
+        answer: 0,
+        explain: "Body mounts (also called cab mounts) isolate the cab from the frame to reduce noise and vibration."
+      },
+      {
+        pts: 200,
+        q: "A truck's 'GVWR' rating refers to what?",
+        choices: [
+          "Gross Vehicle Weight Rating",
+          "General Vehicle Warranty Requirement",
+          "Gear Verified Weight Ratio",
+          "Ground Vehicle Width Restriction"
+        ],
+        answer: 0,
+        explain: "GVWR stands for Gross Vehicle Weight Rating — the maximum loaded weight the truck is designed to handle."
+      },
+      {
+        pts: 300,
+        q: "What component in a truck's drivetrain allows the wheels to rotate at different speeds during a turn?",
+        choices: ["Transfer case", "Differential", "Torque converter", "CV axle"],
+        answer: 1,
+        explain: "The differential allows the inner and outer wheels to rotate at different speeds when cornering."
+      },
+      {
+        pts: 400,
+        q: "What does a truck's 'leaf spring' suspension primarily consist of?",
+        choices: [
+          "Coiled steel wire",
+          "Multiple layered steel strips bolted together",
+          "Air-filled rubber bladders",
+          "Hydraulic fluid chambers"
+        ],
+        answer: 1,
+        explain: "Leaf springs are made of multiple layers (leaves) of curved steel strips clamped together, commonly used in truck rear suspensions."
+      },
+      {
+        pts: 500,
+        q: "In a diesel pickup truck, what is the primary function of the EGR (Exhaust Gas Recirculation) system?",
+        choices: [
+          "Increase fuel economy by recycling unburned fuel",
+          "Reduce NOx emissions by recirculating exhaust back into the intake",
+          "Cool the turbocharger with exhaust gases",
+          "Boost low-end torque by increasing intake pressure"
+        ],
+        answer: 1,
+        explain: "EGR recirculates a portion of exhaust gas back into the intake to lower combustion temperatures and reduce nitrogen oxide (NOx) emissions."
+      }
+    ],
+
+    // ── MISCELLANEOUS ─────────────────────────────────────────────────────
+    [
+      {
+        pts: 100,
+        q: "Which truck is nicknamed 'The Bowtie' by its fans, referencing Chevrolet's logo?",
+        choices: ["Ford F-150", "Chevy Silverado", "GMC Sierra", "Ram 1500"],
+        answer: 1,
+        explain: "Chevrolet's famous bowtie emblem has earned Chevy trucks the 'Bowtie' nickname among enthusiasts."
+      },
+      {
+        pts: 200,
+        q: "What does 'F-150' mean in Ford's truck naming convention? What does the '150' indicate?",
+        choices: [
+          "The truck's original base price in hundreds",
+          "Its approximate half-ton payload class",
+          "The engine displacement in cubic inches",
+          "The truck's wheelbase in centimeters"
+        ],
+        answer: 1,
+        explain: "The '150' places the F-150 in the half-ton class, a legacy naming convention referring to approximate payload capacity."
+      },
+      {
+        pts: 300,
+        q: "The Chevrolet Silverado and the GMC Sierra are built on the same platform. What is this shared platform called?",
+        choices: ["Omega platform", "T1 platform", "GMT 900 legacy", "EcoTec3 platform"],
+        answer: 1,
+        explain: "GM's current full-size trucks ride on the T1 platform, which underpins both the Silverado and Sierra."
+      },
+      {
+        pts: 400,
+        q: "In drag racing slang, what does it mean when a Ford or Chevy truck 'breaks the beam' at the finish line?",
+        choices: [
+          "It spun a wheel and lost traction",
+          "It crossed the finish line and broke the timing light beam",
+          "It blew the engine on the final pass",
+          "It left the starting line before the green light"
+        ],
+        answer: 1,
+        explain: "Breaking the beam refers to the truck's front bumper crossing and interrupting the electronic timing beam at the finish line, stopping the clock."
+      },
+      {
+        pts: 500,
+        q: "Both Ford and Chevy offer a twin-turbocharged V6 in their half-ton trucks. Ford uses the EcoBoost; what is Chevrolet's turbocharged inline-4 high-output engine called?",
+        choices: [
+          "EcoTec3 2.7T",
+          "Duramax 2.7T",
+          "Vortec 2.7 Turbo",
+          "L3B 2.7 Turbo"
+        ],
+        answer: 3,
+        explain: "Chevy's high-output 2.7L turbocharged four-cylinder carries the internal RPO code L3B, delivering 420 hp and 430 lb-ft of torque in its high-output tune."
+      }
+    ]
+  ];
+
+  const VALUES = [100, 200, 300, 400, 500];
+
+  let score = 0;
+  let usedCells = {};
+  let totalCells = CATEGORIES.length * VALUES.length;
+  let answeredCount = 0;
+  let currentCell = null;
+
+  function fmt(n) { return '$' + n.toLocaleString(); }
+
+  function buildBoard() {
+    const board = document.getElementById('tt-board');
+    board.innerHTML = '';
+
+    CATEGORIES.forEach(cat => {
+      const hdr = document.createElement('div');
+      hdr.className = 'tt-cat-header';
+      hdr.textContent = cat.name;
+      board.appendChild(hdr);
+    });
+
+    VALUES.forEach((val, vi) => {
+      CATEGORIES.forEach((cat, ci) => {
+        const cell = document.createElement('div');
+        cell.className = 'tt-cell';
+        cell.textContent = fmt(val);
+        const key = ci + '-' + vi;
+        if (usedCells[key]) cell.classList.add('tt-used');
+        cell.addEventListener('click', () => openQuestion(ci, vi, cell, key));
+        board.appendChild(cell);
+      });
+    });
+  }
+
+  function openQuestion(catIdx, valIdx, cell, key) {
+    if (usedCells[key]) return;
+    currentCell = { catIdx, valIdx, cell, key };
+
+    const q = QUESTIONS[catIdx][valIdx];
+    document.getElementById('tt-modal-pts').textContent = fmt(q.pts);
+    document.getElementById('tt-modal-cat').textContent = CATEGORIES[catIdx].name;
+    document.getElementById('tt-modal-q').textContent = q.q;
+    document.getElementById('tt-modal-feedback').textContent = '';
+    document.getElementById('tt-modal-feedback').className = '';
+    document.getElementById('tt-modal-answer').textContent = '';
+    document.getElementById('tt-modal-continue').style.display = 'none';
+
+    const choicesEl = document.getElementById('tt-modal-choices');
+    choicesEl.innerHTML = '';
+    q.choices.forEach((choice, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'tt-choice-btn';
+      btn.textContent = choice;
+      btn.addEventListener('click', () => handleAnswer(idx, q));
+      choicesEl.appendChild(btn);
+    });
+
+    document.getElementById('tt-modal-backdrop').classList.add('active');
+  }
+
+  function handleAnswer(chosen, q) {
+    const allBtns = document.querySelectorAll('.tt-choice-btn');
+    allBtns.forEach(btn => btn.disabled = true);
+
+    const fb = document.getElementById('tt-modal-feedback');
+    const ansEl = document.getElementById('tt-modal-answer');
+
+    allBtns[q.answer].classList.add('correct');
+
+    if (chosen === q.answer) {
+      score += q.pts;
+      fb.textContent = '&#10003; Correct! +' + fmt(q.pts);
+      fb.className = 'correct';
+    } else {
+      allBtns[chosen].classList.add('wrong');
+      score = Math.max(0, score - Math.round(q.pts * 0.5));
+      fb.textContent = '&#10007; Incorrect. -' + fmt(Math.round(q.pts * 0.5));
+      fb.className = 'wrong';
+    }
+
+    ansEl.textContent = q.explain;
+    document.getElementById('tt-score-display').textContent = fmt(score);
+    document.getElementById('tt-modal-continue').style.display = 'inline-block';
+
+    usedCells[currentCell.key] = true;
+    currentCell.cell.classList.add('tt-used');
+    answeredCount++;
+  }
+
+  document.getElementById('tt-modal-continue').addEventListener('click', () => {
+    document.getElementById('tt-modal-backdrop').classList.remove('active');
+    if (answeredCount >= totalCells) showWinScreen();
+  });
+
+  function showWinScreen() {
+    document.getElementById('tt-board').style.display = 'none';
+    document.getElementById('tt-scoreboard').style.display = 'none';
+    const ws = document.getElementById('tt-win-screen');
+    ws.style.display = 'block';
+    document.getElementById('tt-final-score-val').textContent = fmt(score);
+    let msg = '';
+    if (score >= 6000) msg = 'Expert level! You really know your trucks.';
+    else if (score >= 3500) msg = 'Solid run — you know your way around a pickup.';
+    else if (score >= 1500) msg = 'Not bad! Brush up on your truck trivia and try again.';
+    else msg = 'Keep learning — there\'s more to trucks than meets the eye!';
+    document.getElementById('tt-win-msg').textContent = msg;
+  }
+
+  function resetGame() {
+    score = 0;
+    usedCells = {};
+    answeredCount = 0;
+    document.getElementById('tt-score-display').textContent = '$0';
+    document.getElementById('tt-board').style.display = 'grid';
+    document.getElementById('tt-scoreboard').style.display = 'flex';
+    document.getElementById('tt-win-screen').style.display = 'none';
+    buildBoard();
+  }
+
+  document.getElementById('tt-reset-btn').addEventListener('click', resetGame);
+  document.getElementById('tt-play-again').addEventListener('click', resetGame);
+
+  buildBoard();
+})();
+</script>
+<!-- END TRUCK TRIVIA -->
+
+
+</div>
+
+
+<div class="common footer">
+  <a href="https://www.facebook.com/gage.baumgartner.2025" target="_blank">Facebook</a> | &copy; | 2026 Gage Baumgartner Trucks Inc.
+</div>
+
+</body>
+</html>

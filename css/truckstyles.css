@@ -1,0 +1,122 @@
+body{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #c6d6db;
+    text-transform: uppercase;
+}
+
+.common{
+position: absolute;
+}
+
+
+.header{
+    top: 0px;
+    left: 205px;
+    right: 0px;
+    height: 250px;
+    background-image: url(../assets/img/fordtruck.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.headertext{
+    top: 0px;
+    left: 205px;
+    right: 0px;
+    height: 250px;
+    font-size:xx-large;
+    font-style: italic;
+    text-align: left;
+    padding-top: 120px;
+    padding-left: 40px;
+    z-index: 3;
+    color: white;
+}
+
+
+.leftmenu{
+    top: 0px;
+    width: 205px;
+    left: 0px;
+    bottom: 0px;
+    /* border-right: solid;
+    border-color: white;
+    border-width: 2px; */
+    position: fixed;
+    /* background-color:black; */
+    background-image: url(../assets/img/woodback.jpg);
+    background-position: center;
+    background-size: contain;
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 15px;
+    font-size: 30px;
+    z-index: 6;
+}
+
+
+.footer{
+    height: 40px;
+    /* border-top: solid;
+    border-width: 5px;
+    border-color: black; */
+    bottom: 0px;
+    left: 205px;
+    right: 0px;
+    color: black;
+    background-color: #c6d6db;
+    position: fixed;
+    color: white;
+    font-size: 12px;
+    padding-top: 25px;
+}
+
+
+.topmid{  
+    top: 250px;
+    bottom: 40px;
+    left: 205px;
+    right: 0px;
+    /* border-bottom: solid;
+    border-width: 5px;
+    border-color: black; */
+    background-color: #c6d6db;
+    color: black;
+}
+
+
+.graph{
+    left: 250px;
+    width: 800px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.picframe{
+   height: 400px;
+    border-style: solid;
+    border-width: 10px;
+    border-left-color: #715a1c;
+    border-right-color: #715a1c;
+    border-top-color: #a28228;
+    border-bottom-color: #a28228;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    font-weight: bold;
+}
+
+ol{
+    display: inline-block;
+    text-align: left;
+    text-transform: uppercase;
+}

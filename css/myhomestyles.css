@@ -1,0 +1,23 @@
+ol{
+    font-weight: bold;
+    font-size: larger;
+    text-align: left;
+}
+
+ul{
+    font-weight: normal;
+    font-size: small;
+    text-align: left;
+}
+
+.picture{
+    display: block;
+    width: 1512px;
+    padding-left: 0px;
+}
+
+.p_edit{
+    text-align: center;
+    color: #ffffff;
+    font-size: 30px;
+}
